@@ -16,7 +16,7 @@ function createCell(text: string): HTMLTableCellElement {
 function createRow(book: Book): HTMLTableRowElement {
   const row = document.createElement("tr");
 
-  // heart button comes later (Favorites)
+
   const favCell = document.createElement("td");
   const detailCell = document.createElement("td");
   const detailLink = document.createElement("a");

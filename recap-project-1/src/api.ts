@@ -3,15 +3,31 @@ import { isBook, type Book } from "./types.js";
 const API_URL = "http://localhost:4730";
 
 export async function fetchBooks(): Promise<Book[]> {
-  const response = await fetch(`${API_URL}/books`);
-  if (!response.ok) {
-    throw new Error(`Failed to fetch books: ${response.status}`);
-  }
+    const response = await fetch(`${API_URL}/books`);
+    if (!response.ok) {
+        throw new Error(`Failed to fetch books: ${response.status}`);
+    }
 
-  const data: unknown = await response.json();
-  if (!Array.isArray(data)) {
-    throw new Error("Unexpected response format");
-  }
+    const data: unknown = await response.json();
+    if (!Array.isArray(data)) {
+        throw new Error("Unexpected response format");
+    }
+console.log('///')
+console.log(data)
+console.log('///')
+    return data.filter(isBook);
+}
+// TODO:fetch all properties 
+export async function fetchBook(isbn: string): Promise<Book> {
+    const response = await fetch(`${API_URL}/books/${isbn}`);
+    if (!response.ok) {
+        throw new Error(`Failed to fetch book ${isbn}: ${response.status}`);
+    }
 
-  return data.filter(isBook);
+    const data: unknown = await response.json();
+    if (!isBook(data)) {
+        throw new Error("Unexpected response format");
+    }
+
+    return data;
 }
