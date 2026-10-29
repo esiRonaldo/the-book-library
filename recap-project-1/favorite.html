@@ -23,7 +23,7 @@
     />
     <link rel="stylesheet" href="style.css" />
     <!-- Add the <script type="module"> for this page here. -->
-      <script type="module" src="dist/favorite.js"></script>
+      <script type="module" src="dist/favorites.js"></script>
     <title>Favorites | Book Library</title>
   </head>
   <body>
@@ -37,7 +37,7 @@
               <a
                 href="favorite.html"
                 class="mainnav-link mainnav-link--active"
-                >Favorites <span class="mainnav-number">2</span></a
+                >Favorites <span class="mainnav-number" id="favorite-count">2</span></a
               >
             </nav>
           </div>
@@ -45,7 +45,7 @@
       </div>
     </header>
     <main class="container">
-      <h2>2 Favorites on your list</h2>
+      <h2 id="favorite-heading">2 Favorites on your list</h2>
       <section class="row filter-search">
         <form action="#" class="column">
           <label for="search">Search</label>
@@ -74,7 +74,7 @@
                 <th>&nbsp;</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody id="favorite-list">
               <tr>
                 <td>
                   <button class="button button-clear fav-btn">

@@ -1,4 +1,5 @@
 import { fetchBook } from "./api.js";
+import { renderFavoriteCount } from "./favorites.js";
 import type { Book } from "./types.js";
 
 console.log("detail.ts loaded");
@@ -10,6 +11,8 @@ const publisherText = document.getElementById("book-publisher");
 const pagesText = document.getElementById("book-pages");
 const coverImage = document.getElementById("book-cover");
 const bookDetails = document.getElementById("book-details");
+
+renderFavoriteCount();
 
 function renderBook(book: Book): void {
   if (!(titleHeading instanceof HTMLHeadingElement)) return;
