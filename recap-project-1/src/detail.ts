@@ -10,6 +10,7 @@ const pagesText = document.getElementById("book-pages");
 const coverImage = document.getElementById("book-cover");
 const bookDetails = document.getElementById("book-details");
 const priceText = document.getElementById("book-price");
+const seriesLinks = document.getElementById("series-links");
 
 renderFavoriteCount();
 
@@ -21,6 +22,7 @@ function renderBook(book: Book): void {
   if (!(pagesText instanceof HTMLSpanElement)) return;
   if (!(coverImage instanceof HTMLImageElement)) return;
   if (!(priceText instanceof HTMLSpanElement)) return;
+  if (!(seriesLinks instanceof HTMLParagraphElement)) return;
 
   titleHeading.replaceChildren(book.title);
   if (typeof book.subtitle === "string") {
@@ -41,6 +43,21 @@ function renderBook(book: Book): void {
   priceText.textContent = priceFormat.format(book.price);
   coverImage.src = book.cover;
   coverImage.alt = `Cover of ${book.title}`;
+
+  if (book.predecessorIsbn !== null) {
+    seriesLinks.append(createSeriesLink("Previous volume", book.predecessorIsbn));
+  }
+  if (book.successorIsbn !== null) {
+    seriesLinks.append(createSeriesLink("Next volume", book.successorIsbn));
+  }
+}
+
+function createSeriesLink(text: string, isbn: string): HTMLAnchorElement {
+  const link = document.createElement("a");
+  link.href = `detail.html?isbn=${isbn}`;
+  link.className = "button button-clear";
+  link.textContent = text;
+  return link;
 }
 
 function showError(message: string): void {
