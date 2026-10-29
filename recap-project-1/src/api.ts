@@ -12,9 +12,6 @@ export async function fetchBooks(): Promise<Book[]> {
     if (!Array.isArray(data)) {
         throw new Error("Unexpected response format");
     }
-console.log('///')
-console.log(data)
-console.log('///')
     return data.filter(isBook);
 }
 // TODO:fetch all properties 

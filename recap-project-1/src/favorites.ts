@@ -103,7 +103,5 @@ function renderFavoriteList(): void {
   favoriteHeading.textContent = `${favorites.length} Favorites on your list`;
 }
 
-console.log("favorite.ts loaded");
-
 renderFavoriteCount();
 renderFavoriteList();

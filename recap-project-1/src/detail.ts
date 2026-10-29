@@ -2,8 +2,6 @@ import { fetchBook } from "./api.js";
 import { renderFavoriteCount } from "./favorites.js";
 import type { Book } from "./types.js";
 
-console.log("detail.ts loaded");
-
 const titleHeading = document.getElementById("book-title");
 const abstractText = document.getElementById("book-abstract");
 const authorText = document.getElementById("book-author");
@@ -56,7 +54,7 @@ if (typeof isbn === "string") {
     renderBook(book);
   } catch (error) {
     console.error(error);
-    showError("This book could not be loaded. Please check the ISBN.");
+    showError(`This book could not be loaded. Please check the ISBN. ${error}`);
   }
 } else {
   showError("No ISBN was given.");
