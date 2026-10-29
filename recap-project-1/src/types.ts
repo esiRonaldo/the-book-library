@@ -1,3 +1,4 @@
+export type Currency = "EUR" | "USD" | "GBP" | "CNY" | "RUB";
 export interface Book {
   title: string;
   subtitle?: string;
@@ -7,9 +8,22 @@ export interface Book {
   publisher: string;
   numPages: number;
   cover: string;
+  price: number;
+  currency: Currency;
 }
 
 export type FavoriteBook = Pick<Book, "title" | "isbn" | "author" | "publisher">;
+
+function isCurrency(value: unknown): value is Currency {
+  return (
+    value === "EUR" ||
+    value === "USD" ||
+    value === "GBP" ||
+    value === "CNY" ||
+    value === "RUB"
+  );
+}
+
 
 export function isBook(value: unknown): value is Book {
   return (
@@ -29,7 +43,12 @@ export function isBook(value: unknown): value is Book {
     "numPages" in value &&
     typeof value.numPages === "number" &&
     "cover" in value &&
-    typeof value.cover === "string"
+    typeof value.cover === "string" &&
+    "price" in value &&
+    typeof value.price === "number" &&
+    "currency" in value &&
+    isCurrency(value.currency)
+
   );
 }
 

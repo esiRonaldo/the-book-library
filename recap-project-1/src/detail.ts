@@ -9,6 +9,7 @@ const publisherText = document.getElementById("book-publisher");
 const pagesText = document.getElementById("book-pages");
 const coverImage = document.getElementById("book-cover");
 const bookDetails = document.getElementById("book-details");
+const priceText = document.getElementById("book-price");
 
 renderFavoriteCount();
 
@@ -19,6 +20,7 @@ function renderBook(book: Book): void {
   if (!(publisherText instanceof HTMLSpanElement)) return;
   if (!(pagesText instanceof HTMLSpanElement)) return;
   if (!(coverImage instanceof HTMLImageElement)) return;
+  if (!(priceText instanceof HTMLSpanElement)) return;
 
   titleHeading.replaceChildren(book.title);
   if (typeof book.subtitle === "string") {
@@ -31,6 +33,12 @@ function renderBook(book: Book): void {
   authorText.textContent = book.author;
   publisherText.textContent = book.publisher;
   pagesText.textContent = String(book.numPages);
+
+  const priceFormat = new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: book.currency,
+  });
+  priceText.textContent = priceFormat.format(book.price);
   coverImage.src = book.cover;
   coverImage.alt = `Cover of ${book.title}`;
 }
@@ -54,7 +62,7 @@ if (typeof isbn === "string") {
     renderBook(book);
   } catch (error) {
     console.error(error);
-    showError(`This book could not be loaded. Please check the ISBN. ${error}`);
+    showError("This book could not be loaded. Please check the ISBN.");
   }
 } else {
   showError("No ISBN was given.");
