@@ -10,6 +10,8 @@ export interface Book {
   cover: string;
   price: number;
   currency: Currency;
+  predecessorIsbn: string | null;
+  successorIsbn: string | null;
 }
 
 export type FavoriteBook = Pick<Book, "title" | "isbn" | "author" | "publisher">;
@@ -47,8 +49,11 @@ export function isBook(value: unknown): value is Book {
     "price" in value &&
     typeof value.price === "number" &&
     "currency" in value &&
-    isCurrency(value.currency)
-
+    isCurrency(value.currency) &&
+    "predecessorIsbn" in value &&
+    (typeof value.predecessorIsbn === "string" || value.predecessorIsbn === null) &&
+    "successorIsbn" in value &&
+    (typeof value.successorIsbn === "string" || value.successorIsbn === null)
   );
 }
 
