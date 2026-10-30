@@ -2,29 +2,32 @@ import { isBook, type Book } from "./types.js";
 
 const API_URL = "http://localhost:4730";
 
-export async function fetchBooks(): Promise<Book[]> {
-    const response = await fetch(`${API_URL}/books`);
+async function fetchJson<T>(
+    path: string,
+    isType: (value: unknown) => value is T,
+): Promise<T> {
+    const response = await fetch(`${API_URL}${path}`);
     if (!response.ok) {
-        throw new Error(`Failed to fetch books: ${response.status}`);
+        throw new Error(`Failed to fetch ${path}: ${response.status}`);
     }
 
     const data: unknown = await response.json();
-    if (!Array.isArray(data)) {
-        throw new Error("Unexpected response format");
-    }
-    return data.filter(isBook);
-}
-// TODO:fetch all properties 
-export async function fetchBook(isbn: string): Promise<Book> {
-    const response = await fetch(`${API_URL}/books/${isbn}`);
-    if (!response.ok) {
-        throw new Error(`Failed to fetch book ${isbn}: ${response.status}`);
-    }
-
-    const data: unknown = await response.json();
-    if (!isBook(data)) {
+    if (!isType(data)) {
         throw new Error("Unexpected response format");
     }
 
     return data;
+}
+
+function isArray(value: unknown): value is unknown[] {
+    return Array.isArray(value);
+}
+
+export async function fetchBooks(): Promise<Book[]> {
+    const data = await fetchJson("/books", isArray);
+    return data.filter(isBook);
+}
+
+export async function fetchBook(isbn: string): Promise<Book> {
+    return fetchJson(`/books/${isbn}`, isBook);
 }
